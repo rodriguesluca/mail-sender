@@ -20,19 +20,19 @@ class EmailRequest(BaseModel):
             "examples": [
                 {
                     "to_email": [
-                        "example@digitaly.tech",
-                        "example2@digitaly.tech",
+                        "client@example.com",
+                        "partner@example.com",
                     ],
-                    "cc_email": ["example3@mail.com"],
-                    "subject": "Transcrição Dom Eurico",
-                    "body": "Transcrição Dom Eurico Concluida.\nEssa é uma mensagem automática\n",
-                    "smtp_user": "seu.email@seuemail.com",
-                    "smtp_password": "senha criptografada",
+                    "cc_email": ["manager@example.com"],
+                    "subject": "System Warning - MailSender",
+                    "body": "System processing completed.\nThis is an automated message.\n",
+                    "smtp_user": "your.email@mydomain.com",
+                    "smtp_password": "encrypted_token_here",
                     "smtp_host": "smtp.office365.com",
                     "smtp_port": 587,
                     "smtp_tls": True,
                     "attachment_base64": "",
-                    "attachment_filename": "teste_dom_eurico.xlsx",
+                    "attachment_filename": "report_2026.xlsx",
                 }
             ]
         }
