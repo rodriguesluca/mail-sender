@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MailSender App</title>
+    <link rel="stylesheet" href="/static/style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Ícones -->
+    <script src="https://unpkg.com/feather-icons"></script>
+  </head>
+  <body>
+    <div class="stars"></div>
+    <div class="twinkling"></div>
+
+    <div class="main-container">
+      <header>
+        <div class="logo-area">
+          <i data-feather="send" class="logo-icon"></i>
+          <h1>MailSender</h1>
+        </div>
+        <p>Smart & Secure Asynchronous Email Dispatch</p>
+      </header>
+
+      <div class="glass-panel">
+        <div class="tabs">
+          <button class="tab-btn active" data-target="send-mail">Send Email</button>
+          <button class="tab-btn" data-target="encrypt-tool">Encrypt Password</button>
+        </div>
+
+        <div id="send-mail" class="tab-content active">
+          <form id="emailForm" class="email-form">
+            <h3 style="margin-bottom: -0.5rem; font-size: 1.1rem; color: var(--text-main);"><i data-feather="settings" style="width: 18px; vertical-align: text-bottom;"></i> Server Conf</h3>
+            <div class="form-row">
+              <div class="input-group" style="flex: 2;">
+                <label for="smtp_host"
+                  ><i data-feather="server"></i> SMTP Host</label
+                >
+                <input
+                  type="text"
+                  id="smtp_host"
+                  name="smtp_host"
+                  placeholder="smtp.office365.com"
+                  value="smtp.office365.com"
+                  required
+                />
+              </div>
+              <div class="input-group" style="flex: 0.8;">
+                <label for="smtp_port"
+                  ><i data-feather="hash"></i> Port</label
+                >
+                <input
+                  type="number"
+                  id="smtp_port"
+                  name="smtp_port"
+                  placeholder="587"
+                  value="587"
+                  required
+                />
+              </div>
+              <div class="input-group" style="flex: 1;">
+                <label for="smtp_tls"
+                  ><i data-feather="shield"></i> Security</label
+                >
+                <select id="smtp_tls" name="smtp_tls">
+                  <option value="true">STARTTLS (Yes)</option>
+                  <option value="false">None (No)</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="form-separator"></div>
+            
+            <h3 style="margin-bottom: -0.5rem; font-size: 1.1rem; color: var(--text-main);"><i data-feather="lock" style="width: 18px; vertical-align: text-bottom;"></i> Credentials</h3>
+            <div class="form-row">
+              <div class="input-group">
+                <label for="smtp_user"
+                  ><i data-feather="user"></i> SMTP User (Sender)</label
+                >
+                <input
+                  type="email"
+                  id="smtp_user"
+                  name="smtp_user"
+                  placeholder="your.email@domain.com"
+                  required
+                />
+              </div>
+              <div class="input-group">
+                <label for="smtp_password"
+                  ><i data-feather="key"></i> Encrypted Password (Token)</label
+                >
+                <input
+                  type="password"
+                  id="smtp_password"
+                  name="smtp_password"
+                  placeholder="gAAAAABp..."
+                  required
+                />
+              </div>
+            </div>
+
+            <div class="form-separator"></div>
+
+            <div class="form-row">
+              <div class="input-group">
+                <label for="to_email"
+                  ><i data-feather="mail"></i> To (Recipients)</label
+                >
+                <input
+                  type="text"
+                  id="to_email"
+                  name="to_email"
+                  placeholder="dest1@mail.com, dest2@mail.com"
+                  required
+                />
+                <span class="helper-text">Comma-separated for multiple</span>
+              </div>
+              <div class="input-group">
+                <label for="cc_email"
+                  ><i data-feather="users"></i> CC (Optional)</label
+                >
+                <input
+                  type="text"
+                  id="cc_email"
+                  name="cc_email"
+                  placeholder="cc1@mail.com, cc2@mail.com"
+                />
+              </div>
+            </div>
+
+            <div class="input-group">
+              <label for="subject"><i data-feather="type"></i> Subject</label>
+              <input
+                type="text"
+                id="subject"
+                name="subject"
+                placeholder="Email Subject"
+                required
+              />
+            </div>
+
+            <div class="input-group">
+              <label for="body"
+                ><i data-feather="file-text"></i> Message Body</label
+              >
+              <textarea
+                id="body"
+                name="body"
+                rows="6"
+                placeholder="Write your message here..."
+                required
+              ></textarea>
+            </div>
+
+            <div class="input-group upload-group">
+              <label for="file_upload" class="upload-label">
+                <div class="upload-content">
+                  <i data-feather="paperclip"></i>
+                  <span id="file_name_display">Attach a file (Optional)</span>
+                </div>
+              </label>
+              <input
+                type="file"
+                id="file_upload"
+                name="file_upload"
+                class="hidden-input"
+              />
+            </div>
+
+            <button type="submit" id="submitBtn" class="btn-primary">
+              <span>Send Message</span>
+              <i data-feather="arrow-right"></i>
+            </button>
+          </form>
+
+          <div id="status_message" class="status-message hidden">
+            <!-- Status will be injected here -->
+          </div>
+        </div>
+
+        <div id="encrypt-tool" class="tab-content">
+          <form id="encryptForm" class="email-form">
+            <div class="input-group">
+              <label for="raw_password"
+                ><i data-feather="lock"></i> Raw Plaintext Password</label
+              >
+              <div class="password-wrapper">
+                <input
+                  type="password"
+                  id="raw_password"
+                  name="raw_password"
+                  placeholder="Enter your app password here..."
+                  required
+                />
+                <button type="button" class="toggle-password" id="togglePassword">
+                  <i data-feather="eye"></i>
+                </button>
+              </div>
+            </div>
+            <button type="submit" id="encryptBtn" class="btn-primary" style="background-color: #2ed573;">
+              <span>Generate Encrypted Token</span>
+              <i data-feather="shield"></i>
+            </button>
+          </form>
+
+          <div id="encrypt_result" class="status-message hidden" style="word-break: break-all; margin-top: 1.5rem; display: flex; flex-direction: column; align-items: flex-start; text-align: left;">
+            <!-- Result will be injected here -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="/static/script.js"></script>
+    <script>
+      feather.replace();
+    </script>
+  </body>
+</html>
